@@ -10,9 +10,9 @@ namespace GenericRepositoryServiceDto
         {
             _entityRepository = entity;
         }
-        public Task<int> CountAsync(Expression<Func<ViewModel, bool>> predicate)
+        public Task<int> CountAsync(Expression<Func<Entity, bool>> predicate)
         {
-            return _entityRepository.CountAsync(CustomerDTO.Map(predicate));
+            return _entityRepository.CountAsync(predicate);
         }
 
         public async Task<ViewModel?> GetAsync(string id)
@@ -20,9 +20,9 @@ namespace GenericRepositoryServiceDto
             return CustomerDTO.Map(await _entityRepository.GetAsync(id));
         }
 
-        public async Task<ViewModel?> GetAsync(Expression<Func<ViewModel, bool>> predicate)
+        public async Task<ViewModel?> GetAsync(Expression<Func<Entity, bool>> predicate)
         {
-            return CustomerDTO.Map(await _entityRepository.GetAsync(CustomerDTO.Map(predicate)));
+            return CustomerDTO.Map(await _entityRepository.GetAsync(predicate));
         }
 
         public async Task<IEnumerable<ViewModel?>> GetListAsync(bool isTracking)
@@ -36,18 +36,18 @@ namespace GenericRepositoryServiceDto
         }
 
         public async Task<IEnumerable<ViewModel?>> GetListAsync(
-            bool isTracking, Expression<Func<ViewModel, bool>> predicate)
+            bool isTracking, Expression<Func<Entity, bool>> predicate)
         {
             return CustomerDTO.Map(await _entityRepository.GetListAsync(isTracking,
-                CustomerDTO.Map(predicate)));
+                predicate));
         }
 
         public async Task<IEnumerable<ViewModel?>> GetListAsync(
-            bool isTracking, Expression<Func<ViewModel, bool>> predicate,
+            bool isTracking, Expression<Func<Entity, bool>> predicate,
             int skip, int limit)
         {
             return CustomerDTO.Map(await _entityRepository
-                .GetListAsync(isTracking, CustomerDTO.Map(predicate), skip, limit));
+                .GetListAsync(isTracking, predicate, skip, limit));
         }
 
         public async Task<Guid?> InsertAsync(ViewModel entity)
@@ -60,9 +60,9 @@ namespace GenericRepositoryServiceDto
             return await _entityRepository.RemoveAsync(id);
         }
 
-        public async Task<bool> RemoveAsync(Expression<Func<ViewModel, bool>> predicate)
+        public async Task<bool> RemoveAsync(Expression<Func<Entity, bool>> predicate)
         {
-            return await _entityRepository.RemoveAsync(CustomerDTO.Map(predicate));
+            return await _entityRepository.RemoveAsync(predicate);
         }
 
         public async Task<bool> UpdateAsync(ViewModel entity)

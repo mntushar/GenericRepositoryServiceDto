@@ -38,19 +38,6 @@ namespace GenericRepositoryServiceDto
             };
         }
 
-        public static Expression<Func<Entity, bool>> Map(
-            Expression<Func<ViewModel, bool>> predicate)
-        {
-            ParameterExpression entityParameter = Expression
-                .Parameter(typeof(Entity),
-                predicate.Parameters[0].Name);
-            Expression entityBody = ParameterTypeVisitor
-                .ReplaceParameterType(predicate.Body, predicate.Parameters[0], entityParameter);
-
-            return Expression
-                .Lambda<Func<Entity, bool>>(entityBody, entityParameter);
-        }
-
         public static IEnumerable<ViewModel?> Map(IEnumerable<Entity?> list)
         {
             if (list == null)

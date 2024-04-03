@@ -1,4 +1,6 @@
-﻿namespace GenericRepositoryServiceDto
+﻿using DNE.CS.Inventory.Repository.Repository;
+
+namespace GenericRepositoryServiceDto
 {
     public class EntityRepository : Repository<Entity>, IEntityRepository
     {
