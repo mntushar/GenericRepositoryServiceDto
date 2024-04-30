@@ -1,5 +1,4 @@
 ﻿using DNE.CS.Inventory.Repository.Interface;
-using GenericRepositoryServiceDto;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -109,6 +108,7 @@ namespace DNE.CS.Inventory.Repository.Repository
             try
             {
                 if (!entities.Any()) return Enumerable.Empty<TEntity>();
+                entities = entities.Where(x => x != null);
 
                 entities.ToList().ForEach(entity =>
                 {
@@ -126,7 +126,7 @@ namespace DNE.CS.Inventory.Repository.Repository
             }
         }
 
-        public virtual async Task<TEntity?> GetAsync(string id)
+        public virtual async Task<TEntity?> GetAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -253,7 +253,7 @@ namespace DNE.CS.Inventory.Repository.Repository
             }
         }
 
-        public virtual async Task<bool> RemoveAsync(string id)
+        public virtual async Task<bool> RemoveAsync(Guid id)
         {
             bool isRemove = false;
             var entityLookup = await _dbSet.FindAsync(id);
